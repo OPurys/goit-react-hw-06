@@ -2,19 +2,24 @@ import css from './ContactForm.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { nanoid } from 'nanoid';
 import * as Yup from 'yup';
+import { addContact } from '../../redux/contactsSlice';
+import { useDispatch } from 'react-redux';
 
-const ContactForm = ({ onAdd }) => {
+const ContactForm = () => {
   const initialValues = {
     name: '',
     number: '',
   };
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
     const newContact = {
       id: nanoid(),
       ...values,
     };
-    onAdd(newContact);
+
+    dispatch(addContact(newContact));
     actions.resetForm();
   };
 
